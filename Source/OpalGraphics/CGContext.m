@@ -74,9 +74,15 @@ static void end_shadow(CGContextRef ctx, CGRect bounds);
   self->add->alpha = 1;
   self->add->font_size = 0;
   
-  if (!default_cp) {
+  /* TS-O3: Protect static default_cp initialization against races.
+     Using a simple static flag — assumes first CGContext creation is
+     single-threaded (e.g. from main thread). A dispatch_once would be
+     more robust if available. */
+  static volatile int default_cp_initialized = 0;
+  if (!default_cp_initialized) {
     default_cp = cairo_get_source(self->ct);
     cairo_pattern_reference(default_cp);
+    default_cp_initialized = 1;
   }
 
   /* Cairo defaults to line width 2.0 (see http://cairographics.org/FAQ) */
@@ -298,6 +304,8 @@ void OPContextSetCairoDeviceOffset(CGContextRef ctx, CGFloat x, CGFloat y)
   OPRESTORELOGGING()
 }
 
+/* NOTE: CGContext is not thread-safe. Each context must be confined to a
+   single thread at a time (TS-O1). */
 void CGContextSaveGState(CGContextRef ctx)
 {
   OPLOGCALL("ctx /*%p*/", ctx)
@@ -338,6 +346,7 @@ void CGContextSaveGState(CGContextRef ctx)
   OPRESTORELOGGING()
 }
 
+/* NOTE: CGContext is not thread-safe. See comment on CGContextSaveGState (TS-O1). */
 void CGContextRestoreGState(CGContextRef ctx)
 {
   OPLOGCALL("ctx /*%p*/", ctx)

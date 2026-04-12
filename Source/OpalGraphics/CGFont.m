@@ -37,6 +37,8 @@
 #import "cairo/CairoFontX11.h"
 #endif
 
+/* TODO (PERF): Glyph cache — consider caching glyph metrics and outlines
+   to avoid repeated lookups for commonly used glyphs. */
 @implementation CGFont
 
 + (Class) fontClass

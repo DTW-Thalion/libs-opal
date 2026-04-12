@@ -35,6 +35,9 @@
 
 @end
 
+/* TODO (PERF): State caching — consider dirty-flag tracking on ct_additions
+   fields so that applyToContext only restores changed state, avoiding
+   redundant cairo calls on save/restore cycles. */
 @implementation OpalGStateSnapshot
 
 - (id) initWithContext: (CGContext *)ctx;

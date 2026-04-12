@@ -215,8 +215,15 @@ static NSUInteger OPNumberOfPointsForElementType(CGPathElementType type)
 @end
 
 
+/* NOTE (TS-O5): CGMutablePath is NOT thread-safe. Callers must ensure that
+   mutable paths are not shared across threads without external synchronization.
+   Copy the path (CGPathCreateCopy) before sharing across thread boundaries. */
 @implementation CGMutablePath
 
+/* TODO (PERF): Path growth strategy — consider geometric growth (e.g. 2x)
+   instead of linear +32 to reduce realloc frequency for large paths. */
+/* TODO (PERF): Bounding box cache — cache the bounding box and invalidate on
+   mutation to avoid recomputation in CGPathGetBoundingBox. */
 - (void) addElementWithType: (CGPathElementType)type points: (CGPoint[])points
 {
   if (_elementsArray)
