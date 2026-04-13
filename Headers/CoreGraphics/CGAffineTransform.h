@@ -34,6 +34,11 @@ extern "C" {
 
 /* Data Types */
 
+/* libs-base's CFCGTypes.h (included via NSGeometry.h) already declares
+ * struct CGAffineTransform with the same field layout. Redeclaring here
+ * collides.
+ */
+#ifndef _CFCGTypes_h_GNUSTEP_BASE_INCLUDE
 typedef struct CGAffineTransform
 {
   CGFloat a;
@@ -43,6 +48,7 @@ typedef struct CGAffineTransform
   CGFloat tx;
   CGFloat ty;
 } CGAffineTransform;
+#endif /* _CFCGTypes_h_GNUSTEP_BASE_INCLUDE */
 
 /* Constants */
 

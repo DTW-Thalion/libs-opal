@@ -33,6 +33,13 @@
 extern "C" {
 #endif
 
+/* When libs-base's CFCGTypes.h is available (included via NSGeometry.h)
+ * it already defines CGPoint / CGSize / CGRect and the anonymous enum that
+ * declares CGRectMinXEdge ... CGRectMaxYEdge. Redefining those is a hard
+ * error on clang/gcc. CFCGTypes.h does NOT provide a `CGRectEdge` typedef,
+ * so we always emit that.
+ */
+#ifndef _CFCGTypes_h_GNUSTEP_BASE_INCLUDE
 typedef NSPoint CGPoint;
 typedef NSSize CGSize;
 typedef NSRect CGRect;
@@ -46,6 +53,7 @@ enum
   CGRectMaxXEdge = 2,
   CGRectMaxYEdge = 3
 };
+#endif /* _CFCGTypes_h_GNUSTEP_BASE_INCLUDE */
 typedef int CGRectEdge;
 
 /** Point at 0,0 */
@@ -329,10 +337,16 @@ OP_GEOM_SCOPE CGRect CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat hei
   return rect;
 }
 
+#ifndef _CFCGTypes_h_GNUSTEP_BASE_INCLUDE
+/* libs-base's NSGeometry.h already provides NSRectToCGRect / NSRectFromCGRect
+ * / NSPointToCGPoint / NSPointFromCGPoint / NSSizeToCGSize / NSSizeFromCGSize
+ * as inline functions when CFCGTypes.h has been pulled in. Defining them a
+ * second time collides at the translation-unit level.
+ */
 OP_GEOM_SCOPE CGRect NSRectToCGRect(NSRect rect)
 {
   CGRect cgrect;
-  
+
   cgrect.origin.x = rect.origin.x;
   cgrect.origin.y = rect.origin.y;
   cgrect.size.width = rect.size.width;
@@ -343,7 +357,7 @@ OP_GEOM_SCOPE CGRect NSRectToCGRect(NSRect rect)
 OP_GEOM_SCOPE NSRect NSRectFromCGRect(CGRect rect)
 {
   NSRect nsrect;
-  
+
   nsrect.origin.x = rect.origin.x;
   nsrect.origin.y = rect.origin.y;
   nsrect.size.width = rect.size.width;
@@ -386,6 +400,7 @@ OP_GEOM_SCOPE CGSize NSSizeToCGSize(NSSize size)
   cgsize.height = size.height;
   return cgsize;
 }
+#endif /* _CFCGTypes_h_GNUSTEP_BASE_INCLUDE */
 
 OP_GEOM_SCOPE CGRect CGRectStandardize(CGRect rect)
 {
