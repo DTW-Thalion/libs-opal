@@ -35,6 +35,12 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_gradient_probe.m -o cg_gradient_probe
           ./cg_gradient_probe 2>&1
+      - name: Compile and run the CGColorSpace probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_colorspace_probe.m -o cg_colorspace_probe
+          ./cg_colorspace_probe 2>&1
       - name: Compile and run the CGImage probe
         run: |
           clang -Wno-deprecated-declarations \
