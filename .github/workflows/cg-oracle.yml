@@ -95,3 +95,9 @@ jobs:
             -framework CoreGraphics -framework CoreFoundation \
             Tests/oracle/cg_dataprovider_probe.m -o cg_dataprovider_probe
           ./cg_dataprovider_probe 2>&1
+      - name: Compile and run the bitmap context probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_bitmapctx_probe.m -o cg_bitmapctx_probe
+          ./cg_bitmapctx_probe 2>&1
