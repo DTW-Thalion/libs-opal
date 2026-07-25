@@ -44,7 +44,7 @@ int main(void)
   CGColorSpaceRef dev = CGColorSpaceCreateDeviceRGB();
   CGContextRef ctx = CGBitmapContextCreate(pxo, 1, 1, 8, 4, dev,
     kCGImageAlphaPremultipliedLast);
-  CGColorRef fill = CGColorCreateGenericRGB(0.2, 0.4, 0.6, 1.0);
+  CGFloat dc1[] = {0.2, 0.4, 0.6, 1.0}; CGColorRef fill = CGColorCreate(dev, dc1);
   CGContextSetFillColorWithColor(ctx, fill);
   CGContextFillRect(ctx, CGRectMake(0, 0, 1, 1));
   printf("fill(0.2,0.4,0.6,1.0) opaque pixel RGBA = %d %d %d %d\n",
@@ -53,7 +53,7 @@ int main(void)
   unsigned char pxt[4] = {0, 0, 0, 0};
   CGContextRef ctx2 = CGBitmapContextCreate(pxt, 1, 1, 8, 4, dev,
     kCGImageAlphaPremultipliedLast);
-  CGColorRef fill2 = CGColorCreateGenericRGB(1.0, 0.0, 0.0, 0.5);
+  CGFloat dc2[] = {1.0, 0.0, 0.0, 0.5}; CGColorRef fill2 = CGColorCreate(dev, dc2);
   CGContextSetFillColorWithColor(ctx2, fill2);
   CGContextFillRect(ctx2, CGRectMake(0, 0, 1, 1));
   printf("fill(1,0,0,0.5) premultiplied pixel RGBA = %d %d %d %d\n",
