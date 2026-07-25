@@ -65,3 +65,9 @@ jobs:
             -framework CoreGraphics -framework ImageIO -framework CoreFoundation \
             Tests/oracle/cg_codec_probe.m -o cg_codec_probe
           ./cg_codec_probe 2>&1
+      - name: Compile and run the CGShading probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_shading_probe.m -o cg_shading_probe
+          ./cg_shading_probe 2>&1
