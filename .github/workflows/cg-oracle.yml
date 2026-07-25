@@ -17,3 +17,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_geometry_probe.m -o cg_geometry_probe
           ./cg_geometry_probe 2>&1
+      - name: Compile and run the CGColor probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_color_probe.m -o cg_color_probe
+          ./cg_color_probe 2>&1
