@@ -1,0 +1,13 @@
+name: CoreGraphics oracle
+on: push
+jobs:
+  probe:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and run the CoreGraphics probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_probe.m -o cg_probe
+          ./cg_probe 2>&1
