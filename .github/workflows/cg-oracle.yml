@@ -29,3 +29,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_path_probe.m -o cg_path_probe
           ./cg_path_probe 2>&1
+      - name: Compile and run the CGGradient probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_gradient_probe.m -o cg_gradient_probe
+          ./cg_gradient_probe 2>&1
