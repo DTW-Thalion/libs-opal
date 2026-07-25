@@ -23,3 +23,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_color_probe.m -o cg_color_probe
           ./cg_color_probe 2>&1
+      - name: Compile and run the CGPath probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_path_probe.m -o cg_path_probe
+          ./cg_path_probe 2>&1
