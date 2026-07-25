@@ -47,3 +47,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_image_probe.m -o cg_image_probe
           ./cg_image_probe 2>&1
+      - name: Compile and run the CGContext probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_context_probe.m -o cg_context_probe
+          ./cg_context_probe 2>&1
