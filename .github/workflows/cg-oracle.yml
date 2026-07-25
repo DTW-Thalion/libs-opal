@@ -83,3 +83,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_line_probe.m -o cg_line_probe
           ./cg_line_probe 2>&1
+      - name: Compile and run the text probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_text_probe.m -o cg_text_probe
+          ./cg_text_probe 2>&1
