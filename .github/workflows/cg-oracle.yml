@@ -59,3 +59,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_layer_probe.m -o cg_layer_probe
           ./cg_layer_probe 2>&1
+      - name: Compile and run the image codec probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ImageIO -framework CoreFoundation \
+            Tests/oracle/cg_codec_probe.m -o cg_codec_probe
+          ./cg_codec_probe 2>&1
