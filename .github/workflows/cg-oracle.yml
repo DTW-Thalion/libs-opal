@@ -71,3 +71,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_shading_probe.m -o cg_shading_probe
           ./cg_shading_probe 2>&1
+      - name: Compile and run the CGFont probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_font_probe.m -o cg_font_probe
+          ./cg_font_probe 2>&1
