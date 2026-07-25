@@ -89,3 +89,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_text_probe.m -o cg_text_probe
           ./cg_text_probe 2>&1
+      - name: Compile and run the data provider probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework CoreFoundation \
+            Tests/oracle/cg_dataprovider_probe.m -o cg_dataprovider_probe
+          ./cg_dataprovider_probe 2>&1
