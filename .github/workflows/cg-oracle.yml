@@ -137,3 +137,9 @@ jobs:
             -framework CoreGraphics -framework ImageIO -framework Foundation \
             Tests/oracle/cg_imgprops_probe.m -o cg_imgprops_probe
           ./cg_imgprops_probe 2>&1
+      - name: Compile and run the image copy-colorspace probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_imgcopycs_probe.m -o cg_imgcopycs_probe
+          ./cg_imgcopycs_probe 2>&1
