@@ -107,3 +107,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_pattern_probe.m -o cg_pattern_probe
           ./cg_pattern_probe 2>&1
+      - name: Compile and run the fill colour space probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_fillcolorspace_probe.m -o cg_fillcolorspace_probe
+          ./cg_fillcolorspace_probe 2>&1
