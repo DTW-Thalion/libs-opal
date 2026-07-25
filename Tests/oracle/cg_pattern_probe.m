@@ -39,6 +39,21 @@ int main(void)
 {
   CGColorSpaceRef dev = CGColorSpaceCreateDeviceRGB();
 
+  /* Pattern colour space properties. */
+  {
+    CGColorSpaceRef colored = CGColorSpaceCreatePattern(NULL);
+    CGColorSpaceRef uncolored = CGColorSpaceCreatePattern(CGColorSpaceCreateDeviceRGB());
+    printf("colored-pcs: model=%d numComps=%zu base=%p\n",
+      (int)CGColorSpaceGetModel(colored),
+      CGColorSpaceGetNumberOfComponents(colored),
+      (void *)CGColorSpaceGetBaseColorSpace(colored));
+    CGColorSpaceRef base = CGColorSpaceGetBaseColorSpace(uncolored);
+    printf("uncolored-pcs: model=%d numComps=%zu baseModel=%d\n",
+      (int)CGColorSpaceGetModel(uncolored),
+      CGColorSpaceGetNumberOfComponents(uncolored),
+      base ? (int)CGColorSpaceGetModel(base) : -99);
+  }
+
   /* Colored pattern. */
   {
     unsigned char *buf = calloc(W*H*4, 1);
