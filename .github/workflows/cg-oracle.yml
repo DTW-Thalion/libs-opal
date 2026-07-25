@@ -77,3 +77,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_font_probe.m -o cg_font_probe
           ./cg_font_probe 2>&1
+      - name: Compile and run the line-attribute probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_line_probe.m -o cg_line_probe
+          ./cg_line_probe 2>&1
