@@ -143,3 +143,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_imgcopycs_probe.m -o cg_imgcopycs_probe
           ./cg_imgcopycs_probe 2>&1
+      - name: Compile and run the tiled image probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_tiled_probe.m -o cg_tiled_probe
+          ./cg_tiled_probe 2>&1
