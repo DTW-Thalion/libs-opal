@@ -149,3 +149,9 @@ jobs:
             -framework CoreGraphics -framework ApplicationServices \
             Tests/oracle/cg_tiled_probe.m -o cg_tiled_probe
           ./cg_tiled_probe 2>&1
+      - name: Compile and run the clip mask probe
+        run: |
+          clang -Wno-deprecated-declarations \
+            -framework CoreGraphics -framework ApplicationServices \
+            Tests/oracle/cg_clipmask_probe.m -o cg_clipmask_probe
+          ./cg_clipmask_probe 2>&1
