@@ -11,13 +11,15 @@
 
 static int A(unsigned char *d, int x, int y) { return d[(y*W + x)*4 + 3]; }
 
-/* An 8x8 one-component image: left half = lo, right half = hi. */
-static CGImageRef halfMask(int lo, int hi, bool asMask, CGColorSpaceRef gray)
+/* An 8x8 one-component image.  vertical=0: left half = lo, right half = hi;
+   vertical=1: top image rows = lo, bottom = hi. */
+static CGImageRef halfMaskV(int lo, int hi, bool asMask, int vertical,
+  CGColorSpaceRef gray)
 {
   unsigned char *m = malloc(W*W);
   for (int y = 0; y < W; y++)
     for (int x = 0; x < W; x++)
-      m[y*W+x] = (x < W/2) ? lo : hi;
+      m[y*W+x] = ((vertical ? y : x) < W/2) ? lo : hi;
   CGDataProviderRef dp = CGDataProviderCreateWithData(NULL, m, W*W, NULL);
   CGImageRef img;
   if (asMask)
@@ -38,15 +40,17 @@ static void run(const char *label, CGImageRef mask)
   CGContextSetRGBFillColor(c, 0, 1, 0, 1);
   CGContextFillRect(c, CGRectMake(0, 0, W, W));
   unsigned char *d = CGBitmapContextGetData(c);
-  printf("%s: left(2,4) alpha=%d right(6,4) alpha=%d\n", label, A(d,2,4), A(d,6,4));
+  printf("%s: left(2,4)=%d right(6,4)=%d topDev(4,6)=%d botDev(4,1)=%d\n",
+    label, A(d,2,4), A(d,6,4), A(d,4,6), A(d,4,1));
   free(buf);
 }
 
 int main(void)
 {
   CGColorSpaceRef gray = CGColorSpaceCreateDeviceGray();
-  run("imagemask black|white", halfMask(0, 255, true, gray));
-  /* A normal grey image used as a mask: alpha is None, so use luminance. */
-  run("grayimage black|white", halfMask(0, 255, false, gray));
+  run("imagemask H", halfMaskV(0, 255, true, 0, gray));
+  run("grayimage H", halfMaskV(0, 255, false, 0, gray));
+  run("imagemask V", halfMaskV(0, 255, true, 1, gray));
+  run("grayimage V", halfMaskV(0, 255, false, 1, gray));
   return 0;
 }
